@@ -66,7 +66,7 @@ function doThermiteOnPowerBox(bank)
             if success then
                 thermiteSuccess(bank)
                     
-                TriggerServerEvent("5life-doorlock:server:ptfx", _, x, y, z)
+                TriggerServerEvent("brazzers-bankrobbery:server:ptfx", x, y, z)
                 SetPtfxAssetNextCall("scr_ornate_heist")
                 TaskPlayAnim(ped, "anim@heists@ornate_bank@thermal_charge", "cover_eyes_intro", 8.0, 8.0, 1000, 36, 1, 0, 0, 0)
                 TaskPlayAnim(ped, "anim@heists@ornate_bank@thermal_charge", "cover_eyes_loop", 8.0, 8.0, 6000, 49, 1, 0, 0, 0)

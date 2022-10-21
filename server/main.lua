@@ -6,7 +6,7 @@ local globalCooldown = false
 
 -- Net Events
 
-RegisterServerEvent("brazzers-bankrobbery:server:robBankCheck", function(bank)
+RegisterNetEvent("brazzers-bankrobbery:server:robBankCheck", function(bank)
     local src = source
     if not src then return end
     local Player = QBCore.Functions.GetPlayer(src)
@@ -56,11 +56,11 @@ RegisterNetEvent('brazzers-bankrobbery:server:computerCleanup', function(k, i)
     end)
 end)
 
-RegisterServerEvent("brazzers-bankrobbery:server:toggleVault", function(bank)
+RegisterNetEvent("brazzers-bankrobbery:server:toggleVault", function(bank)
     TriggerClientEvent("brazzers-bankrobbery:client:toggleVault", -1, bank)
 end)
 
-RegisterServerEvent("brazzers-bankrobbery:server:updateVaultState", function(bank, state)
+RegisterNetEvent("brazzers-bankrobbery:server:updateVaultState", function(bank, state)
     Config.Banks[bank]['doors']['locked'] = state
 end)
 
@@ -74,7 +74,7 @@ RegisterNetEvent("brazzers-bankrobbery:server:setComputerAttempts", function(sta
     end
 end)
 
-RegisterServerEvent("brazzers-bankrobbery:server:setBankCooldown", function(bank)
+RegisterNetEvent("brazzers-bankrobbery:server:setBankCooldown", function(bank)
     Config.Banks[bank]['lastRobbed'] = os.time()
     fleecaCooldown = true
     SetTimeout(60000*Config.BankResetWait, function()
@@ -84,8 +84,13 @@ RegisterServerEvent("brazzers-bankrobbery:server:setBankCooldown", function(bank
     end)
 end)
 
+-- Net Event for thermal effect
+RegisterNetEvent('brazzers-bankrobbery:server:ptfx', function(x, y, z)
+	TriggerClientEvent('brazzers-bankrobbery:client:ptfx', -1, x, y, z)
+end)
+
 -- Register Cool Down Events For Locations
-RegisterServerEvent('brazzers-bankrobbery:server:globalCooldown', function()
+RegisterNetEvent('brazzers-bankrobbery:server:globalCooldown', function()
     globalCooldown = true
     local timer = Config.GlobalCooldown * 60000
     while timer > 0 do

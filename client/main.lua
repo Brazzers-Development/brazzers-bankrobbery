@@ -500,6 +500,20 @@ RegisterNetEvent("brazzers-bankrobbery:client:startHeist", function(bank)
     SpawnTrolleys(bank)
 end)
 
+RegisterNetEvent("brazzers-bankrobbery:client:ptfx", function(x, y, z)
+    local ptfx
+
+    RequestNamedPtfxAsset("scr_ornate_heist")
+    while not HasNamedPtfxAssetLoaded("scr_ornate_heist") do
+        Wait(1)
+    end
+        ptfx = vector3(x, y, z)
+    SetPtfxAssetNextCall("scr_ornate_heist")
+    local effect = StartParticleFxLoopedAtCoord("scr_heist_ornate_thermal_burn", ptfx, 0.0, 0.0, 0.0, 1.0, false, false, false, false)
+    Wait(7000)
+    StopParticleFxLooped(effect, 0)
+end) 
+
 -- Threads
 
 CreateThread(function()
