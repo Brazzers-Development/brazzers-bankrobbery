@@ -1,7 +1,7 @@
 QBCore = exports[Config.Core]:GetCoreObject()
 
-local isLoaded = LocalPlayer.state.isLoggedIn
 local disableControl = false
+local PlayerData = {}
 
 -- Functions
 
@@ -33,7 +33,7 @@ local function bankCleanup(bank)
     TriggerServerEvent("brazzers-bankrobbery:server:setPowerBoxStatus", 'isBusy', false, bank) -- Power Box
     TriggerServerEvent("brazzers-bankrobbery:server:setPostVaultPanel", 'isBusy', false, bank) -- Post Vault Panel
 
-    for k, v in pairs(Config.Banks[bank]['drills']) do
+    for k, _ in pairs(Config.Banks[bank]['drills']) do
         TriggerServerEvent("brazzers-bankrobbery:server:setLockerStatus", "isBusy", false, bank, k) -- Lockers
     end
 
@@ -51,15 +51,14 @@ local function SpawnTrolleys(bank)
     while not HasModelLoaded("hei_prop_hei_cash_trolly_01") do
         Wait(1)
     end
-    Trolley = CreateObject(`hei_prop_hei_cash_trolly_01`, Config.Banks[bank]['trolly']['coords'].x, Config.Banks[bank]['trolly']['coords'].y, Config.Banks[bank]['trolly']['coords'].z - 1.0, 1, 1, 0) 
-    local h1 = GetEntityHeading(Trolley) 
+    local Trolley = CreateObject(`hei_prop_hei_cash_trolly_01`, Config.Banks[bank]['trolly']['coords'].x, Config.Banks[bank]['trolly']['coords'].y, Config.Banks[bank]['trolly']['coords'].z - 1.0, 1, 1, 0)
+    local h1 = GetEntityHeading(Trolley)
 
     SetEntityHeading(Trolley, h1 + Config.Banks[bank]['trolly']['heading'])
 end
 
 function thermiteSuccess(bank)
-    local ped = PlayerPedId()
-    local playerCoords = GetEntityCoords(ped)
+    if not bank then return end
 
     alertPolice('thermite')
     TriggerServerEvent("brazzers-bankrobbery:server:setPowerBoxStatus", 'isBusy', true, bank)
@@ -154,7 +153,7 @@ local function drillLockers(bank, locker)
     SetEntityHeading(ped, Config.Banks[bank]['drills'][locker]['heading'])
     TaskPlayAnimAdvanced(ped, animDict, animLib, Config.Banks[bank]['drills'][locker]['drillCoords'].x, Config.Banks[bank]['drills'][locker]['drillCoords'].y, Config.Banks[bank]['drills'][locker]['drillCoords'].z, 0.0, 0.0, Config.Banks[bank]['drills'][locker]['heading'], 1.0, -1.0, -1, 2, 0, 0, 0 )
     
-    attachedDrill = CreateObject(drillProp, 1.0, 1.0, 1.0, 1, 1, 0)
+    local attachedDrill = CreateObject(drillProp, 1.0, 1.0, 1.0, 1, 1, 0)
     AttachEntityToEntity(attachedDrill, ped, boneIndex, 0.0, 0, 0.0, 0.0, 0.0, 0.0, 1, 1, 0, 0, 2, 1)
     
     SetEntityAsMissionEntity(attachedDrill, true, true)
@@ -162,10 +161,10 @@ local function drillLockers(bank, locker)
     RequestAmbientAudioBank("DLC_HEIST_FLEECA_SOUNDSET", 0)
     RequestAmbientAudioBank("DLC_MPHEIST\\HEIST_FLEECA_DRILL", 0)
     RequestAmbientAudioBank("DLC_MPHEIST\\HEIST_FLEECA_DRILL_2", 0)
-    drillSound = GetSoundId()
+    local drillSound = GetSoundId()
     Wait(100)
     PlaySoundFromEntity(drillSound, "Drill", attachedDrill, "DLC_HEIST_FLEECA_SOUNDSET", 1, 0)
-    Wait(100)	
+    Wait(100)
     
     local particleDictionary = "scr_fbi5a"
     local particleName = "scr_bio_cutter_flame"
@@ -176,7 +175,7 @@ local function drillLockers(bank, locker)
     end
 
     SetPtfxAssetNextCall(particleDictionary)
-    effect = StartParticleFxLoopedOnEntity(particleName, attachedDrill, 0.0, -0.6, 0.0, 0.0, 0.0, 0.0, 10.0, 0, 0, 0)
+    local effect = StartParticleFxLoopedOnEntity(particleName, attachedDrill, 0.0, -0.6, 0.0, 0.0, 0.0, 0.0, 10.0, 0, 0, 0)
     ShakeGameplayCam("ROAD_VIBRATION_SHAKE", 1.0)
     Wait(100)
 
@@ -293,7 +292,7 @@ local function grabCash(bank)
         NetworkAddPedToSynchronisedScene(ped, scene3, "anim@heists@ornate_bank@grab_cash", "exit", 1.5, -4.0, 1, 16, 1148846080, 0)
         NetworkAddEntityToSynchronisedScene(bag, scene3, "anim@heists@ornate_bank@grab_cash", "bag_exit", 4.0, -8.0, 1)
         NetworkStartSynchronisedScene(scene3)
-        NewTrolley = CreateObject(emptyobj, GetEntityCoords(trollyobj) + vector3(0.0, 0.0, - 0.985), true)
+        local NewTrolley = CreateObject(emptyobj, GetEntityCoords(trollyobj) + vector3(0.0, 0.0, - 0.985), true)
         SetEntityRotation(NewTrolley, GetEntityRotation(trollyobj))
         while not NetworkHasControlOfEntity(trollyobj) do
             Wait(1)
@@ -328,12 +327,6 @@ local function forceVaultClosed(bank)
         until count == 900
     end
 end
-
--- Net Events
-
-RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
-    isLoaded = true
-end)
 
 -- | UPDATE STATUS | --
 
@@ -387,9 +380,9 @@ RegisterNetEvent("thermite:client:useThermite", function()
             if v['powerbox']['isBusy'] then return end
             if not hasItem(Config.ThermiteItem) then return QBCore.Functions.Notify(Lang:t("error.missing_thermite"), "error", 5000) end
 
-            QBCore.Functions.TriggerCallback("brazzers-bankrobbery:server:enoughCops", function(enoughCops)  
+            QBCore.Functions.TriggerCallback("brazzers-bankrobbery:server:enoughCops", function(enoughCops)
                 if enoughCops < Config.MinimumPolice then return QBCore.Functions.Notify(Lang:t("error.enough_police"), "error", 5000) end
-                QBCore.Functions.TriggerCallback("brazzers-bankrobbery:server:onCooldown", function(onCoolDown)  
+                QBCore.Functions.TriggerCallback("brazzers-bankrobbery:server:onCooldown", function(onCoolDown)
                     if onCoolDown then return QBCore.Functions.Notify(Lang:t("error.bank_cooldown"), "error", 5000) end
 
                     thermitePowerBox(k)
@@ -400,9 +393,9 @@ RegisterNetEvent("thermite:client:useThermite", function()
 end)
 
 RegisterNetEvent("lockpicks:UseLockpick", function(isAdvanced)
-    usingAdvanced = isAdvanced
+    local usingAdvanced = isAdvanced
     if usingAdvanced then
-        for k, v in pairs(Config.Banks) do
+        for _, v in pairs(Config.Banks) do
             local ped = PlayerPedId()
             local pos = GetEntityCoords(ped)
             local dist = #(pos - v['behindCounter']['coords'].xyz)
@@ -432,18 +425,18 @@ function lockpickResult(result, doorId)
     end
 end
 
-RegisterNetEvent('brazzers-bankrobbery:client:robTheBank', function(laptop) 
+RegisterNetEvent('brazzers-bankrobbery:client:robTheBank', function() 
     if not hasItem(Config.Laptop) then return QBCore.Functions.Notify(Lang:t("error.missing_laptop"), "error", 5000) end
     for k, v in pairs(Config.Banks) do
         local ped = PlayerPedId()
         local pos = GetEntityCoords(ped)
         local dist = #(pos - vector3(v['doors']['animCoords'].x, v['doors']['animCoords'].y, v['doors']['animCoords'].z))
 
-        if dist <= 4.0 then 
+        if dist <= 4.0 then
             if v['onRob'] then return QBCore.Functions.Notify(Lang:t("error.recently_robbed"), "error", 5000) end
             if not v['doors']['locked'] then return QBCore.Functions.Notify(Lang:t("error.unavailable"), "error", 5000) end
 
-            QBCore.Functions.TriggerCallback("brazzers-bankrobbery:server:enoughCops", function(enoughCops)  
+            QBCore.Functions.TriggerCallback("brazzers-bankrobbery:server:enoughCops", function(enoughCops)
                 if enoughCops < Config.MinimumPolice then return QBCore.Functions.Notify(Lang:t("error.enough_police"), "error", 5000) end
                 QBCore.Functions.TriggerCallback("brazzers-bankrobbery:server:checkGlobalCooldown",function(isGlobalCooldown)
                     if isGlobalCooldown then return QBCore.Functions.Notify(Lang:t("error.firstload_cooldown"), "error", 5000) end
@@ -490,12 +483,12 @@ RegisterNetEvent("brazzers-bankrobbery:client:startHeist", function(bank)
     local ped = PlayerPedId()
 
     SetEntityCoords(ped, vector3(bankId['doors']['animCoords'].x, bankId['doors']['animCoords'].y, bankId['doors']['animCoords'].z - 1.0))
-    SetEntityHeading(ped, bankId['doors']['animHeading']) 
+    SetEntityHeading(ped, bankId['doors']['animHeading'])
     
-    TaskStartScenarioInPlace(ped, "PROP_HUMAN_ATM", 0, true) 
+    TaskStartScenarioInPlace(ped, "PROP_HUMAN_ATM", 0, true)
     
     ClearPedTasksImmediately(ped)
-    Wait(1000)  
+    Wait(1000)
     PlaySoundFrontend(-1, "ATM_WINDOW", "HUD_FRONTEND_DEFAULT_SOUNDSET")
     TriggerServerEvent("brazzers-bankrobbery:server:setBankStatus", "onRob", true, bank)
 
@@ -511,7 +504,7 @@ end)
 
 CreateThread(function()
     while true do
-        for k, v in pairs(Config.Banks) do
+        for _, v in pairs(Config.Banks) do
             local ped = PlayerPedId()
             local pos = GetEntityCoords(ped)
             local dist = #(pos - vector3(v['doors']['startLoc'].x, v['doors']['startLoc'].y, v['doors']['startLoc'].z))
@@ -537,7 +530,7 @@ CreateThread(function()
             minZ = v['trolly']['coords'].z - 1,
             maxZ = v['trolly']['coords'].z + 2,
             }, {
-                options = { 
+                options = {
                 {
                     action = function()
                         grabCash(k)
@@ -545,7 +538,7 @@ CreateThread(function()
                     icon = 'fas fa-dollar-sign',
                     label = 'Grab Cash!',
                     canInteract = function()
-                        if v["onRob"] and not v['trolly']['isBusy'] and not disableControl then 
+                        if v["onRob"] and not v['trolly']['isBusy'] and not disableControl then
                             return true
                         end
                     end,
@@ -560,7 +553,7 @@ CreateThread(function()
             minZ = v['postVault']['coords'].z - 1,
             maxZ = v['postVault']['coords'].z + 2,
             }, {
-                options = { 
+                options = {
                 {
                     action = function()
                         decryptPostVault(k)
@@ -568,7 +561,7 @@ CreateThread(function()
                     icon = 'fas fa-cube',
                     label = 'Decrypt',
                     canInteract = function()
-                        if v["onRob"] and not v['postVault']['isBusy'] and not disableControl then 
+                        if v["onRob"] and not v['postVault']['isBusy'] and not disableControl then
                             return true
                         end
                     end,
@@ -583,7 +576,7 @@ CreateThread(function()
             minZ = v['panel']['coords'].z - 1,
             maxZ = v['panel']['coords'].z + 2,
             }, {
-                options = { 
+                options = {
                 {
                     action = function()
                         forceVaultClosed(k)
@@ -591,7 +584,7 @@ CreateThread(function()
                     icon = 'fas fa-lock',
                     label = 'Lock Vault',
                     canInteract = function()
-                        if not v["doors"]['locked'] and not disableControl and isPolice() then 
+                        if not v["doors"]['locked'] and not disableControl and isPolice() then
                             return true
                         end
                     end,
@@ -607,7 +600,7 @@ CreateThread(function()
                 minZ = j['coords'].z - 1,
                 maxZ = j['coords'].z + 2,
                 }, {
-                    options = { 
+                    options = {
                     {
                         action = function()
                             drillLockers(k, i)
@@ -632,7 +625,7 @@ CreateThread(function()
                 minZ = b['coords'].z + 0.65,
                 maxZ = b['coords'].z + 1.0,
                 }, {
-                    options = { 
+                    options = {
                     {
                         action = function()
                             decryptComputers(k, a)
