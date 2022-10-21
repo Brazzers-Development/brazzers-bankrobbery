@@ -66,9 +66,8 @@ function doThermiteOnPowerBox(bank)
             if success then
                 thermiteSuccess(bank)
                     
-                TriggerServerEvent("5life-doorlock:server:ptfx", method, x, y, z) 
+                TriggerServerEvent("5life-doorlock:server:ptfx", _, x, y, z)
                 SetPtfxAssetNextCall("scr_ornate_heist")
-                local effect = StartParticleFxLoopedAtCoord("scr_heist_ornate_thermal_burn", ptfx, 0.0, 0.0, 0.0, 1.0, false, false, false, false)
                 TaskPlayAnim(ped, "anim@heists@ornate_bank@thermal_charge", "cover_eyes_intro", 8.0, 8.0, 1000, 36, 1, 0, 0, 0)
                 TaskPlayAnim(ped, "anim@heists@ornate_bank@thermal_charge", "cover_eyes_loop", 8.0, 8.0, 6000, 49, 1, 0, 0, 0)
                 Wait(2000)
@@ -116,7 +115,7 @@ end
 -- Events used: "lockpicks:UseLockpick" // Global event for lockpicks
 -- This minigame is for hacking through the door to get to the computers
 function doLockpickOnDoor(doorId)
-    local success = exports['5life-lock']:StartLockPickCircle(1, math.random(40, 60), success)
+    local success = exports['5life-lock']:StartLockPickCircle(1, math.random(40, 60))
     if not success then return lockpickResult('failed', doorId) end
     lockpickResult('passed', doorId)
 end
@@ -125,7 +124,7 @@ end
 -- Item used for this hack: Config.Laptop
 -- This hack is the main panel hack to get pass the vault door
 function doBankPadHack(bankId)
-    exports['5life-fleecahack']:OpenHackingGame(function(success) 
+    exports['5life-fleecahack']:OpenHackingGame(function(success)
         if not success then return bankPadResult('failed', bankId) end
         bankPadResult('passed', bankId)
     end)
@@ -204,7 +203,7 @@ CreateThread(function()
         minZ = -75.30 - 0.65,
         maxZ = -75.30,
         }, {
-            options = { 
+            options = {
             {
                 action = function()
                     tradeInUsbs()

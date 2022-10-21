@@ -1,7 +1,7 @@
 QBCore = exports[Config.Core]:GetCoreObject()
 
 RegisterServerEvent('brazzers-bankrobbery:server:degradeItem', function(shitter)
-	local src = source 
+	local src = source
 	local Player = QBCore.Functions.GetPlayer(src)
     local item = Player.Functions.GetItemByName(shitter)
     if Config.DegradeItem then
@@ -34,21 +34,21 @@ RegisterServerEvent("brazzers-bankrobbery:server:reward", function(bank, type)
 
     if type == 'trolly' then
         -- TROLLY EARNINGS BELOW
-        Player.Functions.AddItem(Config.MarkedBills, Config.TrollyMarkedReward) 
+        Player.Functions.AddItem(Config.MarkedBills, Config.TrollyMarkedReward)
         TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.MarkedBills], "add")
     elseif type == 'locker' then
         -- LOCKER EARNINGS FROM DRILL
-        Player.Functions.AddItem(Config.MarkedBills, Config.LockerMarkedReward) 
+        Player.Functions.AddItem(Config.MarkedBills, Config.LockerMarkedReward)
         TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[Config.MarkedBills], "add")
         if chance <= 15 then
-            Player.Functions.AddItem(Config.InkedBills, Config.InkedBillReward) 
+            Player.Functions.AddItem(Config.InkedBills, Config.InkedBillReward)
             TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[Config.InkedBills], "add")
         end
     elseif type == 'computer' then
         -- COMPUTER EARNINGS
         local info = {}
         info.amount = Config.CryptoReward
-        Player.Functions.AddItem(Config.ComputerUSB, 1, info) 
+        Player.Functions.AddItem(Config.ComputerUSB, 1, info)
         TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[Config.ComputerUSB], "add")
     end
 end)
@@ -73,7 +73,7 @@ RegisterNetEvent('brazzers-bankrobbery:server:purchaseFromBuyer', function(data)
     local paid = exports[Config.Phone]:RemoveCrypto(src, data.crypto, data.amount)
     if not paid then return TriggerClientEvent('QBCore:Notify', src, Lang:t("error.enough_crypto"), 'error') end
 
-    Player.Functions.AddItem(data.item, 1, false, info) 
+    Player.Functions.AddItem(data.item, 1)
     TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[data.item], "add")
 end)
 
@@ -105,15 +105,11 @@ end)
 -- HACKING LAPTOP ITEM
 QBCore.Functions.CreateUseableItem('greenlaptop',function(source)
     local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
-
     TriggerClientEvent("brazzers-bankrobbery:client:robTheBank", src)
 end)
 
 -- THERMITE ITEM
-QBCore.Functions.CreateUseableItem('thermitecharge', function(source) 
-	local src = source 
-	local Player = QBCore.Functions.GetPlayer(src)
-
+QBCore.Functions.CreateUseableItem('thermitecharge', function(source)
+	local src = source
     TriggerClientEvent("thermite:client:useThermite", src)
 end)

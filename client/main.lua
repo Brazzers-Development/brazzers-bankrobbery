@@ -132,7 +132,7 @@ local function drillLockers(bank, locker)
 
     local ped = PlayerPedId()
     local animDict = "anim@heists@fleeca_bank@drilling"
-    local animLib = "drill_straight_idle"	
+    local animLib = "drill_straight_idle"
     
     FreezeEntityPosition(ped, true)
     
@@ -217,7 +217,7 @@ local function grabCash(bank)
         local ped = PlayerPedId()
         local model = "hei_prop_heist_cash_pile"
 
-        Trolley = GetClosestObjectOfType(GetEntityCoords(ped), 1.0, `hei_prop_hei_cash_trolly_01`, false, false, false)
+        local Trolley = GetClosestObjectOfType(GetEntityCoords(ped), 1.0, `hei_prop_hei_cash_trolly_01`, false, false, false)
         local CashAppear = function()
             local pedCoords = GetEntityCoords(ped)
             local grabmodel = GetHashKey(model)
@@ -401,9 +401,9 @@ RegisterNetEvent("lockpicks:UseLockpick", function(isAdvanced)
             local dist = #(pos - v['behindCounter']['coords'].xyz)
 
             if dist <= 4.0 then
-                QBCore.Functions.TriggerCallback("brazzers-bankrobbery:server:enoughCops", function(enoughCops)  
+                QBCore.Functions.TriggerCallback("brazzers-bankrobbery:server:enoughCops", function(enoughCops)
                     if enoughCops < Config.MinimumPolice then return QBCore.Functions.Notify(Lang:t("error.enough_police"), "error", 5000) end
-                    QBCore.Functions.TriggerCallback("brazzers-bankrobbery:server:onComputerCooldown", function(onCoolDown)  
+                    QBCore.Functions.TriggerCallback("brazzers-bankrobbery:server:onComputerCooldown", function(onCoolDown)
                         if onCoolDown then return QBCore.Functions.Notify(Lang:t("error.computer_cooldown"), "error", 5000) end
 
                         doLockpickOnDoor(v['behindCounter']['doorId'])
@@ -425,7 +425,7 @@ function lockpickResult(result, doorId)
     end
 end
 
-RegisterNetEvent('brazzers-bankrobbery:client:robTheBank', function() 
+RegisterNetEvent('brazzers-bankrobbery:client:robTheBank', function()
     if not hasItem(Config.Laptop) then return QBCore.Functions.Notify(Lang:t("error.missing_laptop"), "error", 5000) end
     for k, v in pairs(Config.Banks) do
         local ped = PlayerPedId()

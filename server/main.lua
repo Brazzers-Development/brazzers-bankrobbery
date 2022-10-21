@@ -75,7 +75,6 @@ RegisterNetEvent("brazzers-bankrobbery:server:setComputerAttempts", function(sta
 end)
 
 RegisterServerEvent("brazzers-bankrobbery:server:setBankCooldown", function(bank)
-    local src = source
     Config.Banks[bank]['lastRobbed'] = os.time()
     fleecaCooldown = true
     SetTimeout(60000*Config.BankResetWait, function()
@@ -99,11 +98,11 @@ RegisterServerEvent('brazzers-bankrobbery:server:globalCooldown', function()
 end)
 
 -- CallBack For CoolDown
-QBCore.Functions.CreateCallback("brazzers-bankrobbery:server:checkGlobalCooldown",function(source, cb)
+QBCore.Functions.CreateCallback("brazzers-bankrobbery:server:checkGlobalCooldown",function(_, cb)
     if globalCooldown then
         cb(true)
     else
-        cb(false)     
+        cb(false)
     end
 end)
 
@@ -117,23 +116,23 @@ CreateThread(function()
     computerCooldown = false
 end)
 
-QBCore.Functions.CreateCallback('brazzers-bankrobbery:server:onCooldown', function(source, cb)
+QBCore.Functions.CreateCallback('brazzers-bankrobbery:server:onCooldown', function(_, cb)
     cb(fleecaCooldown)
 end)
 
-QBCore.Functions.CreateCallback('brazzers-bankrobbery:server:onComputerCooldown', function(source, cb)
+QBCore.Functions.CreateCallback('brazzers-bankrobbery:server:onComputerCooldown', function(_, cb)
     cb(computerCooldown)
 end)
 
-QBCore.Functions.CreateCallback('brazzers-bankrobbery:server:enoughCops', function(source, cb)
-	local Cops = 0 
-    for k, v in pairs(QBCore.Functions.GetPlayers()) do 
+QBCore.Functions.CreateCallback('brazzers-bankrobbery:server:enoughCops', function(_, cb)
+	local Cops = 0
+    for _, v in pairs(QBCore.Functions.GetPlayers()) do
         local Player = QBCore.Functions.GetPlayer(v)
-        if Player ~= nil then 
-            if Player.PlayerData.job.name == "police" and Player.PlayerData.job.onduty then 
-                Cops = Cops + 1 
+        if Player then
+            if Player.PlayerData.job.name == "police" and Player.PlayerData.job.onduty then
+                Cops = Cops + 1
             end
         end
-    end 
+    end
     cb(Cops)
 end)
