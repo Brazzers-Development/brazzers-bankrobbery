@@ -512,7 +512,7 @@ RegisterNetEvent("brazzers-bankrobbery:client:ptfx", function(x, y, z)
     local effect = StartParticleFxLoopedAtCoord("scr_heist_ornate_thermal_burn", ptfx, 0.0, 0.0, 0.0, 1.0, false, false, false, false)
     Wait(7000)
     StopParticleFxLooped(effect, 0)
-end) 
+end)
 
 -- Threads
 
