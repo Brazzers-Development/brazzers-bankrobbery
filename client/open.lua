@@ -1,4 +1,4 @@
-QBCore = exports["5life-core"]:GetCoreObject()
+QBCore = exports[Config.Core]:GetCoreObject()
 
 -- [INFO] --
 -- Alert the police based off specific actions
@@ -8,12 +8,10 @@ function alertPolice(alertType)
         -- [INFO]
         -- You lock picked the door to the computers and received this alert
         -- Due to spam, the alert is one time on the lockpick of the door and not each computer attempt for each computer
-        exports['5life-police']:alertSecurityDisturbance('Fleeca Bank')
     elseif alertType == 'thermite' then
         -- Call Type: Power Disturbance
         -- [INFO]
         -- You just thermited the power, the alert will trigger on success and fail
-        exports['5life-police']:alertPowerDisturbance('Fleeca Bank')
     end
 end
 
@@ -62,7 +60,7 @@ function doThermiteOnPowerBox(bank)
         FreezeEntityPosition(bomba, true)
         NetworkStopSynchronisedScene(bagscene)
 
-        exports['5life-interface']:Thermite(function(success)
+        exports['ps-ui']:Thermite(function(success)
             if success then
                 thermiteSuccess(bank)
                     
@@ -91,7 +89,7 @@ function doDecryptionOnComputers(bank, computer)
     local chance = math.random(1, 4)
     if chance == 1 then shit = 'alphanumeric' elseif chance == 2 then shit = 'greek' elseif chance == 3 then shit = 'numeric' elseif chance == 4 then shit = 'alphabet' end
 
-    exports['5life-interface']:Scrambler(function(success)
+    exports['ps-ui']:Scrambler(function(success)
         if success then
             decryptComputersResult('passed', bank, computer) -- [DO NOT CHANGE THIS]
         else
@@ -104,7 +102,7 @@ end
 -- Item used for this hack: Config.DecrypterItem
 -- This minigame is after the vault opens. This is to get pass the gate and give access to the trolly
 function doPostVaultHack(bank)
-    exports['5life-interface']:VarHack(function(success)
+    exports['ps-ui']:VarHack(function(success)
         if not success then return decryptPostVaultResult('failed', bank) end
         decryptPostVaultResult('passed', bank)
     end, 5, 5) -- Number of Blocks, Time (seconds)
@@ -115,7 +113,7 @@ end
 -- Events used: "lockpicks:UseLockpick" // Global event for lockpicks
 -- This minigame is for hacking through the door to get to the computers
 function doLockpickOnDoor(doorId)
-    local success = exports['5life-lock']:StartLockPickCircle(1, math.random(40, 60))
+    local success = exports['qb-lock']:StartLockPickCircle(1, math.random(40, 60))
     if not success then return lockpickResult('failed', doorId) end
     lockpickResult('passed', doorId)
 end
@@ -124,7 +122,7 @@ end
 -- Item used for this hack: Config.Laptop
 -- This hack is the main panel hack to get pass the vault door
 function doBankPadHack(bankId)
-    exports['5life-fleecahack']:OpenHackingGame(function(success)
+    exports['NoPixel-minigame']:OpenHackingGame(function(success)
         if not success then return bankPadResult('failed', bankId) end
         bankPadResult('passed', bankId)
     end)
@@ -133,7 +131,7 @@ end
 -- [INFO] --
 -- Input your doorlock event here ( the door id is used as `doorId`)
 function toggleDoorlock(doorId)
-    TriggerServerEvent('rl-doorlock:server:updateState', doorId, false, false, false, true)
+    TriggerServerEvent('qb-doorlock:server:updateState', doorId, false, false, false, true)
 end
 
 -- [CRIMINAL HUB]
@@ -231,10 +229,8 @@ CreateThread(function()
     local signCombo = ComboZone:Create(powerPoly, {name = "powerbox", debugPoly = Config.Debug})
     signCombo:onPlayerInOut(function(isPointInside)
         if isPointInside then
-            exports["5life-ui"]:showInteraction("Power Box")
             exports[Config.Core]:DrawText(Lang:t("info.powerbox"), 'left')
         else
-            exports["5life-ui"]:hideInteraction()
             exports[Config.Core]:HideText()
         end
     end)

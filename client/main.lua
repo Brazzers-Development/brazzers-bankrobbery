@@ -416,12 +416,12 @@ end)
 
 function lockpickResult(result, doorId)
     if result == 'passed' then
-        TriggerServerEvent('5life-lockpick:server:degradeItem', 'advancedlockpick')
+        TriggerServerEvent('brazzers-bankrobbery:server:degradeItem', 'advancedlockpick')
 
         alertPolice('securitydoor')
         toggleDoorlock(doorId)
     elseif result == 'failed' then
-        TriggerServerEvent('5life-lockpick:server:degradeItem', 'advancedlockpick')
+        TriggerServerEvent('brazzers-bankrobbery:server:degradeItem', 'advancedlockpick')
     end
 end
 

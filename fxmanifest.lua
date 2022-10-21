@@ -19,7 +19,7 @@ server_scripts {
 }
 
 shared_scripts {
-	'@5life-core/shared/locale.lua',
+	'@qb-core/shared/locale.lua',
 	'locales/*.lua',
 	'shared/*.lua',
 }

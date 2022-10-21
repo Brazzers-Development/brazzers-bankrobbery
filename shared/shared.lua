@@ -2,10 +2,10 @@ Config = {}
 
 -- GLOBAL CONFIG
 Config.Debug = false
-Config.Core = '5life-core'
-Config.Target = '5life-eye'
+Config.Core = 'qb-core'
+Config.Target = 'qb-target'
 Config.Phone = 'qb-phone'
-Config.Menu = '5life-menu'
+Config.Menu = 'qb-menu'
 
 -- MINIMUM POLICE TO START A HEIST
 Config.MinimumPolice = 0
