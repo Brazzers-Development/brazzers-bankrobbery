@@ -1,0 +1,203 @@
+	{
+		objName = -147325430, -- [DOOR NUMBER 117] -- Legion Square Fleeca Bank [Office Door]
+		objCoords  = vector3(145.56, -1041.32, 29.38),			
+		textCoords = vector3(145.56, -1041.32, 29.38),
+		authorizedJobs = {'police'},
+		locked = true,
+        pickable = false,
+        detcord = true,        
+		doorType = 'door',
+		distance = 1.5,
+	},
+	{
+		objName = -147325430, -- [DOOR NUMBER 118] -- Legion Square Fleeca Bank [Vault Door]
+		objCoords  = vector3(144.16, -1043.87, 29.38),			
+		textCoords = vector3(144.16, -1043.87, 29.38),
+		authorizedJobs = {'police'},
+		locked = true,
+        pickable = false,
+        detcord = true,        
+		doorType = 'door',
+		distance = 1.0,
+	},
+	{
+		objName = -1591004109, -- [DOOR NUMBER 119] -- Legion Square Fleeca Bank [Post Vault Door]
+		objCoords  = vector3(149.51, -1047.19, 29.37),			
+		textCoords = vector3(149.51, -1047.19, 29.37),
+		authorizedJobs = {'police'},
+		locked = true,
+        pickable = false,
+        detcord = true,        
+		doorType = 'door',
+		distance = 2.0,
+	},
+	--
+	{
+		objName = -147325430, -- [DOOR NUMBER 120] -- Hawick Ave Fleeca Bank [Office Door]
+		objCoords  = vector3(309.83, -279.7, 54.18),			
+		textCoords = vector3(309.83, -279.7, 54.18),
+		authorizedJobs = {'police'},
+		locked = true,
+        pickable = false,
+        detcord = true,        
+		doorType = 'door',
+		distance = 1.5,
+	},
+	{
+		objName = -147325430, -- [DOOR NUMBER 121] -- Hawick Ave Fleeca Bank [Vault Door]
+		objCoords  = vector3(308.47, -282.21, 54.18),			
+		textCoords = vector3(308.47, -282.21, 54.18),
+		authorizedJobs = {'police'},
+		locked = true,
+        pickable = false,
+        detcord = true,        
+		doorType = 'door',
+		distance = 1.0,
+	},
+	{
+		objName = -1591004109, -- [DOOR NUMBER 122] -- Hawick Ave Fleeca Bank [Post Vault Door]
+		objCoords  = vector3(313.89, -285.59, 54.16),			
+		textCoords = vector3(313.89, -285.59, 54.16),
+		authorizedJobs = {'police'},
+		locked = true,
+        pickable = false,
+        detcord = true,        
+		doorType = 'door',
+		distance = 2.0,
+	},
+	--
+	{
+		objName = -147325430, -- [DOOR NUMBER 123] -- Hawick Ave #2 Fleeca Bank [Office Door]
+		objCoords  = vector3(-355.2, -50.59, 49.05),			
+		textCoords = vector3(-355.2, -50.59, 49.05),
+		authorizedJobs = {'police'},
+		locked = true,
+        pickable = false,
+        detcord = true,        
+		doorType = 'door',
+		distance = 1.5,
+	},
+	{
+		objName = -147325430, -- [DOOR NUMBER 124] -- Hawick Ave #2 Fleeca Bank [Vault Door]
+		objCoords  = vector3(-356.63, -53.08, 49.05),			
+		textCoords = vector3(-356.63, -53.08, 49.05),
+		authorizedJobs = {'police'},
+		locked = true,
+        pickable = false,
+        detcord = true,        
+		doorType = 'door',
+		distance = 1.0,
+	},
+	{
+		objName = -1591004109, -- [DOOR NUMBER 125] -- Hawick Ave #2 Fleeca Bank [Post Vault Door]
+		objCoords  = vector3(-351.21, -56.52, 49.04),			
+		textCoords = vector3(-351.21, -56.52, 49.04),
+		authorizedJobs = {'police'},
+		locked = true,
+        pickable = false,
+        detcord = true,        
+		doorType = 'door',
+		distance = 2.0,
+	},
+	--
+	{
+		objName = -147325430, -- [DOOR NUMBER 126] -- Hawick Ave #2 Fleeca Bank [Office Door]
+		objCoords  = vector3(-1215.16, -334.25, 37.79),			
+		textCoords = vector3(-1215.16, -334.25, 37.79),
+		authorizedJobs = {'police'},
+		locked = true,
+        pickable = false,
+        detcord = true,        
+		doorType = 'door',
+		distance = 1.5,
+	},
+	{
+		objName = -147325430, -- [DOOR NUMBER 127] -- Hawick Ave #2 Fleeca Bank [Vault Door]
+		objCoords  = vector3(-1214.29, -337.06, 37.79),			
+		textCoords = vector3(-1214.29, -337.06, 37.79),
+		authorizedJobs = {'police'},
+		locked = true,
+        pickable = false,
+        detcord = true,        
+		doorType = 'door',
+		distance = 1.0,
+	},
+	{
+		objName = -1591004109, -- [DOOR NUMBER 128] -- Hawick Ave #2 Fleeca Bank [Post Vault Door]
+		objCoords  = vector3(-1208.11, -335.52, 37.78),			
+		textCoords = vector3(-1208.11, -335.52, 37.78),
+		authorizedJobs = {'police'},
+		locked = true,
+        pickable = false,
+        detcord = true,        
+		doorType = 'door',
+		distance = 2.0,
+	},
+	--
+	{
+		objName = -147325430, -- [DOOR NUMBER 129] -- Great Ocean Fleeca Bank [Office Door]
+		objCoords  = vector3(-2960.75, 478.95, 15.71),			
+		textCoords = vector3(-2960.75, 478.95, 15.71),
+		authorizedJobs = {'police'},
+		locked = true,
+        pickable = false,
+        detcord = true,        
+		doorType = 'door',
+		distance = 1.5,
+	},
+	{
+		objName = -147325430, -- [DOOR NUMBER 130] -- Great Ocean Fleeca Bank [Vault Door]
+		objCoords  = vector3(-2957.63, 478.35, 15.71),			
+		textCoords = vector3(-2957.63, 478.35, 15.71),
+		authorizedJobs = {'police'},
+		locked = true,
+        pickable = false,
+        detcord = true,        
+		doorType = 'door',
+		distance = 1.5,
+	},
+	{
+		objName = -1591004109, -- [DOOR NUMBER 131] -- Great Ocean Fleeca Bank [Post Vault Door]
+		objCoords  = vector3(-2956.29, 484.57, 15.7),			
+		textCoords = vector3(-2956.29, 484.57, 15.7),
+		authorizedJobs = {'police'},
+		locked = true,
+        pickable = false,
+        detcord = true,        
+		doorType = 'door',
+		distance = 2.0,
+	},
+	--
+	{
+		objName = -147325430, -- [DOOR NUMBER 132] -- Harmony Fleeca Bank [Office Door]
+		objCoords  = vector3(1178.92, 2708.81, 38.1),			
+		textCoords = vector3(1178.92, 2708.81, 38.1),
+		authorizedJobs = {'police'},
+		locked = true,
+        pickable = false,
+        detcord = true,        
+		doorType = 'door',
+		distance = 1.5,
+	},
+	{
+		objName = -147325430, -- [DOOR NUMBER 133] -- Harmony Fleeca Bank [Vault Door]
+		objCoords  = vector3(1179.44, 2711.88, 38.1),			
+		textCoords = vector3(1179.44, 2711.88, 38.1),
+		authorizedJobs = {'police'},
+		locked = true,
+        pickable = false,
+        detcord = true,        
+		doorType = 'door',
+		distance = 1.5,
+	},
+	{
+		objName = -1591004109, -- [DOOR NUMBER 134] -- Harmony Fleeca Bank [Post Vault Door]
+		objCoords  = vector3(1173.03, 2713.06, 38.09),			
+		textCoords = vector3(1173.03, 2713.06, 38.09),
+		authorizedJobs = {'police'},
+		locked = true,
+        pickable = false,
+        detcord = true,        
+		doorType = 'door',
+		distance = 2.0,
+	},
