@@ -10,6 +10,41 @@ and modify the values to your needs.
 
 YOU WILL need to modify the doorIds for each door at each bank to your servers door Ids. If you use qb-doorlocks I have provided a doorlock file for all doorlocks needed for GabZ Fleeca. This will give you a jump start for those doorIds
 
+## How to get doorIds ?
+Simply use this snippet for qb-doorlock replace with your toggledoorlock command ( when unlocking the door, it will produce the doorid in F8 )
+```lua
+RegisterCommand('toggledoorlock', function()
+    if not closestDoor.data or not next(closestDoor.data) then return end
+
+    local distanceCheck = closestDoor.distance > (closestDoor.data.distance or closestDoor.data.maxDistance)
+    local unlockableCheck = (closestDoor.data.cantUnlock and closestDoor.data.locked)
+    local busyCheck = PlayerData.metadata['isdead'] or PlayerData.metadata['inlaststand'] or PlayerData.metadata['ishandcuffed']
+    if distanceCheck or unlockableCheck or busyCheck then return end
+
+    playerPed = PlayerPedId()
+    local veh = GetVehiclePedIsIn(playerPed)
+    if veh then
+        CreateThread(function()
+            local siren = IsVehicleSirenOn(veh)
+            for _ = 0, 100 do
+                DisableControlAction(0, 86, true)
+                SetHornEnabled(veh, false)
+                if not siren then SetVehicleSiren(veh, false) end
+                Wait(0)
+            end
+            SetHornEnabled(veh, true)
+        end)
+    end
+    local locked = not closestDoor.data.locked
+    local src = false
+    if closestDoor.data.audioRemote then src = NetworkGetNetworkIdFromEntity(playerPed) end
+    print(closestDoor.id) -- Print Door ID in F8
+    TriggerServerEvent('qb-doorlock:server:updateState', closestDoor.id, locked, src, false, false, true, true) -- Broadcast new state of the door to everyone
+end, false)
+TriggerEvent("chat:removeSuggestion", "/toggledoorlock")
+RegisterKeyMapping('toggledoorlock', Lang:t("general.keymapping_description"), 'keyboard', 'E')
+```
+
 ## Features
 1. CFX Escrow System ( Encrypted Resource ) [Open Client/ Open Server/ Locale / and Config Open]
 2. Low MS (0.00 Idle | 0.00-0.01 In Use)
