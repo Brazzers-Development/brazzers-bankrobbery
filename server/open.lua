@@ -85,18 +85,16 @@ RegisterNetEvent('brazzers-bankrobbery:server:tradeInUSBs', function()
     local item = Player.Functions.GetItemByName(Config.ComputerUSB)
     if not item then return end
 
-    if Player.PlayerData.items[item.slot].info.quality > 0 then
-        if Player.Functions.RemoveItem(Config.ComputerUSB, 1) then
-            TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.ComputerUSB], "add")
-            exports[Config.Phone]:AddCrypto(src, 'xcoin', 6)
-            TriggerClientEvent('qb-phone:client:CustomNotification', src,
-                "CRYPTO",
-                "6 X Coin added!",
-                "fas fa-chart-line",
-                "#D3B300",
-                3500
-            )
-        end
+    if Player.Functions.RemoveItem(Config.ComputerUSB, 1) then
+        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.ComputerUSB], "add")
+        exports[Config.Phone]:AddCrypto(src, 'xcoin', 6)
+        TriggerClientEvent('qb-phone:client:CustomNotification', src,
+            "CRYPTO",
+            "6 X Coin added!",
+            "fas fa-chart-line",
+            "#D3B300",
+            3500
+        )
     end
 end)
 
