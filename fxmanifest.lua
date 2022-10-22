@@ -28,5 +28,5 @@ escrow_ignore {
     'client/open.lua',
     'server/open.lua',
     'locales/*.lua',
-    'shared.lua',
+	'shared/*.lua',
 }
