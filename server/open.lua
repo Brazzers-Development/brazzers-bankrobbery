@@ -33,10 +33,14 @@ RegisterServerEvent("brazzers-bankrobbery:server:reward", function(bank, type)
     local chance = math.random(1, 100)
 
     if type == 'trolly' then
+        local info = {}
+        info.worth = math.random(5000, 10000)
         -- TROLLY EARNINGS BELOW
-        Player.Functions.AddItem(Config.MarkedBills, Config.TrollyMarkedReward)
+        Player.Functions.AddItem(Config.MarkedBills, Config.TrollyMarkedReward, false, info)
         TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.MarkedBills], "add")
     elseif type == 'locker' then
+        local info = {}
+        info.worth = math.random(5000, 10000)
         -- LOCKER EARNINGS FROM DRILL
         Player.Functions.AddItem(Config.MarkedBills, Config.LockerMarkedReward)
         TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[Config.MarkedBills], "add")
@@ -46,9 +50,7 @@ RegisterServerEvent("brazzers-bankrobbery:server:reward", function(bank, type)
         end
     elseif type == 'computer' then
         -- COMPUTER EARNINGS
-        local info = {}
-        info.amount = Config.CryptoReward
-        Player.Functions.AddItem(Config.ComputerUSB, 1, info)
+        Player.Functions.AddItem(Config.ComputerUSB, 1)
         TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[Config.ComputerUSB], "add")
     end
 end)
