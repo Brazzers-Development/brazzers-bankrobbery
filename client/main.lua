@@ -80,9 +80,9 @@ local function thermitePowerBox(bank)
 end
 
 local function decryptComputers(bank, computer)
-    if Config.Banks[bank]['computers'][computer]['isBusy'] then return end
-
-    doDecryptionOnComputers(bank, computer)
+    if not Config.Banks[bank]['computers'][computer]['isBusy'] then
+        doDecryptionOnComputers(bank, computer)
+    end
 end
 
 function decryptComputersResult(result, bank, computer)
