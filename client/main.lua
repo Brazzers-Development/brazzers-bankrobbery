@@ -452,8 +452,10 @@ function bankPadResult(result, bankId)
     if result == 'passed' then
         passedBankHack(bankId)
         TriggerServerEvent('brazzers-bankrobbery:server:degradeItem', 'greenlaptop')
+        alertPolice('vault')
     elseif result == 'failed' then
         TriggerServerEvent('brazzers-bankrobbery:server:degradeItem', 'greenlaptop')
+        alertPolice('vault')
     end
 end
 

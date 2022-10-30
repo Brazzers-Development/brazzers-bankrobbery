@@ -12,6 +12,10 @@ function alertPolice(alertType)
         -- Call Type: Power Disturbance
         -- [INFO]
         -- You just thermited the power, the alert will trigger on success and fail
+    elseif alertType == 'vault' then
+        -- Call Type: Vault Hacked ( Only works on success attempts )
+        -- [INFO]
+        -- You just successfully hacked the panel to get pass the main door
     end
 end
 
