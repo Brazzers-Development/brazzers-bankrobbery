@@ -128,16 +128,3 @@ end)
 QBCore.Functions.CreateCallback('brazzers-bankrobbery:server:onComputerCooldown', function(_, cb)
     cb(computerCooldown)
 end)
-
-QBCore.Functions.CreateCallback('brazzers-bankrobbery:server:enoughCops', function(_, cb)
-	local Cops = 0
-    for _, v in pairs(QBCore.Functions.GetPlayers()) do
-        local Player = QBCore.Functions.GetPlayer(v)
-        if Player then
-            if Player.PlayerData.job.name == "police" and Player.PlayerData.job.onduty then
-                Cops = Cops + 1
-            end
-        end
-    end
-    cb(Cops)
-end)

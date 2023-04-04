@@ -113,3 +113,18 @@ QBCore.Functions.CreateUseableItem('thermitecharge', function(source)
 	local src = source
     TriggerClientEvent("thermite:client:useThermite", src)
 end)
+
+-- Callbacks
+
+QBCore.Functions.CreateCallback('brazzers-bankrobbery:server:enoughCops', function(_, cb)
+	local Cops = 0
+    for _, v in pairs(QBCore.Functions.GetPlayers()) do
+        local Player = QBCore.Functions.GetPlayer(v)
+        if Player then
+            if Player.PlayerData.job.type == "leo" and Player.PlayerData.job.onduty then
+                Cops = Cops + 1
+            end
+        end
+    end
+    cb(Cops)
+end)
